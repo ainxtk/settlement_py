@@ -1,0 +1,44 @@
+from tika import parser
+import os
+import json
+
+'''parsed = parser.from_file('/path/to/file')
+print(parsed["metadata"])
+print(parsed["content"])'''
+
+class DocParser():
+	'''this class will take file_path of different file formats (pdf,docx,txt,ppt) as input and will parse 
+	and extract utf-8 context as well as metadat from that file'''
+	
+	def __init__(self,file_path,supported_format):
+		'''input file_path ex /home/tathagata/Desktop/flask_project/
+	           supported_format ex ['pdf','docx']'''
+		self.file_path=file_path
+		self.supported_format=supported_format
+		
+	def ParseFiles(self):
+		try:
+			processed_file_name=[]
+			for entry in os.listdir(self.file_path):
+				if os.path.isfile(os.path.join(self.file_path, entry)) and entry.split('.')[-1] in self.supported_format:
+					print(os.path.join(self.file_path, entry))
+					self.__tikaparse(os.path.join(self.file_path, entry))
+				processed_file_name.append(os.path.join(self.file_path+'output/', f"{entry.split('/')[-1].split('.')[0]}_content.json"))
+			return {'status':True,'output_files':processed_file_name}
+		except Exception as e:
+			return {'status':False,'err_msg':str(e)}
+	
+	def __tikaparse(self,filename):
+		'''this function will take fielname as input and create metadata and content json'''
+		try:
+			parsed = parser.from_file(filename)
+			out_file = open(os.path.join(self.file_path+'output/',f"{filename.split('/')[-1].split('.')[0]}_content.json"), "w")  
+			print(os.path.join(self.file_path+'output/',f"{filename.split('/')[-1].split('.')[0]}_content.json"))  
+			json.dump(parsed["content"], out_file, indent = 6)   
+			out_file.close() 
+		except Exception as e:
+			pass
+
+if __name__ == '__main__':
+	docPas=DocParser('/home/tathagata/Desktop/flask_project/',['pdf','doc'])
+	print(docPas.ParseFiles())
