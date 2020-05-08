@@ -1,0 +1,9 @@
+1)unzip flask_project1.1.tar.gz and go to core_package from terminal and then execute 
+`pip install .`
+
+2)go to backend folder from terminal and execute 
+`python run.py`
+
+3)check the url using below command
+
+`curl --location --request POST 'http://0.0.0.0:5000/receiver/post_update' --header 'Content-Type: application/json' --data-raw '{"data":"sample record"}'`
