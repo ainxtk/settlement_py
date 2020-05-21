@@ -1,11 +1,11 @@
 import unittest
-from test_app import test_app
+from test_app import app
 import json
 
 class BasicTestCase(unittest.TestCase):
 
 	def test_home(self):
-		with test_app.test_client() as client:
+		with app.test_client() as client:
 		    # send data as POST form to endpoint
 		    sent = {'data':'sample record'}
 		    result = client.post('/receiver/post_update',data=json.dumps(sent),content_type='application/json')
