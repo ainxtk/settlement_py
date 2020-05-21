@@ -29,6 +29,6 @@ session = Session(engine)
 from test_app.webhook_receiver.controllers.webhook_receiver_controller import blueprint as webhook_receiver
 
 #Register Blueprint
-app.register_blueprint(webhook_receiver)
+test_app.register_blueprint(webhook_receiver)
 
 
