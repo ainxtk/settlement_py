@@ -3,7 +3,7 @@ from flask_restplus import Api, Resource
 from json import dumps, load
 from flask import json, jsonify,request
 import os
-from app.webhook_receiver.services import webhook_reciever_service as wrs
+from test_app.webhook_receiver.services import webhook_reciever_service as wrs
 
 blueprint = Blueprint('webhook_receiver_controller',__name__,url_prefix='/receiver')
 webhook_receiver_controller = Api(blueprint)
