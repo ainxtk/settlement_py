@@ -5,14 +5,21 @@ jobs:
     docker:
       - image: circleci/python:3.7.3 # every job must define an image for the docker executor and subsequent jobs may define a different image.
         environment:
-          PIPENV_VENV_IN_PROJECT: true
-          DATABASE_URL: postgres+psycopg2://postgres:password@database-1.ccxp9suofmqw.us-east-2.rds.amazonaws.com:5432
+          environment:
+          TEST_DATABASE_URL: postgresql://root@localhost/circle_test
       - image: circleci/postgres:9.6.2 # an example of how to specify a service container
         environment:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: database-1
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
     steps:
       - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get install postgresql-client-9.6
+      - run: whoami
+      - run: |
+          psql \
+          -d $TEST_DATABASE_URL \
+          -c "create table ledger(id serial primary key,from_acc numeric not null,to_acc numeric not null,amount numeric not null,transaction_id numeric not null,transaction_datetime timestamp);"
       - run:
           name: Install Python deps
           command: |
@@ -21,8 +28,7 @@ jobs:
             sudo pip install pytest
             pytest ledger_microservice/backend/service/test_run.py --junitxml=flask_project/junit.xml
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: ledger_microservice 
+          path: ledger_microservice
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: ledger_microservice
           destination: tr1
-
