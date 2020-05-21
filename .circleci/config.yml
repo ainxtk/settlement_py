@@ -1,28 +1,34 @@
 version: 2
 jobs:
-  build:
-    working_directory: ~/project
-    docker:
+  build:
+    working_directory: ~/project
+    docker:
       - image: circleci/python:3.7.3 # every job must define an image for the docker executor and subsequent jobs may define a different image.
-          environment:
-          TEST_DATABASE_URL: postgresql://root@localhost/circle_test
-      - image: circleci/postgres:9.6.2 # an example of how to specify a service container
-        environment:
-          POSTGRES_USER: root
-          POSTGRES_DB: circle_test
-    steps:
-      - checkout
-            psql \
-          -d $TEST_DATABASE_URL \
-          -c "create table ledger(id serial primary key,from_acc numeric not null,to_acc numeric not null,amount numeric not null,transaction_id numeric not null,transaction_datetime timestamp);"
-      - run:
-          name: Install Python deps
-          command: |
-            sudo pip install -r requirements.txt
-            sudo pip install Werkzeug==0.16.0
-            sudo pip install pytest
-            pytest ledger_microservice/backend/service/test_run.py --junitxml=flask_project/junit.xml
-      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-      - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-          path: ledger_microservice
-          destination: tr1
+        environment:
+          environment:
+          TEST_DATABASE_URL: postgresql://root@localhost/circle_test
+      - image: circleci/postgres:9.6.2 # an example of how to specify a service container
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get install postgresql-client-9.6
+      - run: whoami
+      - run: |
+          psql \
+          -d $TEST_DATABASE_URL \
+          -c "create table ledger(id serial primary key,from_acc numeric not null,to_acc numeric not null,amount numeric not null,transaction_id numeric not null,transaction_datetime timestamp);"
+      - run:
+          name: Install Python deps
+          command: |
+            sudo pip install -r requirements.txt
+            sudo pip install Werkzeug==0.16.0
+            sudo pip install pytest
+            pytest flask_project/backend/service/test_run.py --junitxml=flask_project/junit.xml
+      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: flask_project
+      - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: flask_project
+          destination: tr1
