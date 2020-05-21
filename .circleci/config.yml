@@ -26,9 +26,9 @@ jobs:
             sudo pip install -r requirements.txt
             sudo pip install Werkzeug==0.16.0
             sudo pip install pytest
-            pytest flask_project/backend/service/test_run.py --junitxml=flask_project/junit.xml
+            pytest ledger_microservice/backend/service/test_run.py --junitxml=flask_project/junit.xml
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: flask_project
+          path: ledger_microservice
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-          path: flask_project
+          path: ledger_microservice
           destination: tr1
