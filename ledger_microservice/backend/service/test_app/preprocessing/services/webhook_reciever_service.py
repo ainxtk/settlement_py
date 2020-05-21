@@ -1,4 +1,4 @@
-from app import Transaction_Record,session
+from test_app import Transaction_Record,session
 import json
 def Preprocessing(content):
 	try:
