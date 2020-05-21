@@ -15,7 +15,7 @@ class BasicTestCase(unittest.TestCase):
 		self.assertEqual(result.status_code,200)
 
 		data = json.loads(result.get_data(as_text=True))
-		print(f"here is {data} {json.dumps(sent)}")
+	#	print(f"here is {data} {json.dumps(sent)}")
                
 		self.assertEqual(data['Web_result'],'sample output')
 
