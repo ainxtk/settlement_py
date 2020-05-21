@@ -16,7 +16,7 @@ app.config.from_pyfile('config.py')
 mtadta = MetaData()
 #DATABASE_URI = 'postgres+psycopg2://postgres:tatha1234@database-2.ccxp9suofmqw.us-east-2.rds.amazonaws.com:5432'
 #DATABASE_URI = 'postgres+psycopg2://postgres:postgres123@settlement.c6vhzbom3mcr.us-east-2.rds.amazonaws.com:5432'
-DATABASE_URI = 'postgresql://root@localhost/circle_test'
+#DATABASE_URI = 'postgresql://root@localhost/circle_test'
 
 engine = create_engine(DATABASE_URI)
 mtadta.reflect(engine)
