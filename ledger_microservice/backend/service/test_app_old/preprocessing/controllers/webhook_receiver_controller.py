@@ -4,7 +4,6 @@ from json import dumps, load
 from flask import json, jsonify,request
 import os
 from app.webhook_receiver.services import webhook_reciever_service as wrs
-from app.preprocessing.services import preprocessing_service as prs
 
 blueprint = Blueprint('webhook_receiver_controller',__name__,url_prefix='/receiver')
 webhook_receiver_controller = Api(blueprint)
@@ -26,13 +25,8 @@ class WebhookReceiver(Resource):
 		dt = wrs.webhookservice(content)
 		print('here now---')
 		if dt['status']:
-			response['Web_result'] = dt['data']
+			response['result'] = dt['data']
 			response['status'] = 'success'
-			pt=prs.Preprocessing(content)
-			if pt['status']:
-				response['prs_status'] = 'success'
-			else:
-				response['prs_status'] = 'failed'
 			temp=json.dumps(response,default=str)
 			response=json.loads(temp)
 			return jsonify(response)

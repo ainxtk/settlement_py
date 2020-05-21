@@ -2,6 +2,7 @@ import unittest
 from test_app import app
 import json
 
+
 class BasicTestCase(unittest.TestCase):
 
 	def test_home(self):
