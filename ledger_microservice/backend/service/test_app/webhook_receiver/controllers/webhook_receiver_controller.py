@@ -28,11 +28,11 @@ class WebhookReceiver(Resource):
 		if dt['status']:
 			response['Web_result'] = dt['data']
 			response['status'] = 'success'
-			pt=prs.Preprocessing(content)
+			'''pt=prs.Preprocessing(content)
 			if pt['status']:
 				response['prs_status'] = 'success'
 			else:
-				response['prs_status'] = 'failed'
+				response['prs_status'] = 'failed'''
 			temp=json.dumps(response,default=str)
 			response=json.loads(temp)
 			return jsonify(response)
