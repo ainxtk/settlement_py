@@ -26,7 +26,7 @@ ledger = Base.classes.ledger
 session = Session(engine)
 
 #Import a module / component using its blueprint handler 
-from app.webhook_receiver.controllers.webhook_receiver_controller import blueprint as webhook_receiver
+from test_app.webhook_receiver.controllers.webhook_receiver_controller import blueprint as webhook_receiver
 
 #Register Blueprint
 app.register_blueprint(webhook_receiver)
