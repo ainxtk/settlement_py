@@ -13,7 +13,7 @@ setup(name='webhook',
              'Flask',
              'Flask-Cors',
              'flask-restplus==0.13.0',
-             'Werkzeug==0.16.0',
+             'Werkzeug==2.2.3',
 	     'sqlalchemy',
 	     'psycopg2-binary'
                 ],zip_safe=False)
